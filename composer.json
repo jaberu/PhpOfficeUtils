@@ -1,0 +1,28 @@
+{
+    "name": "jaberu/PhpOfficeUtils",
+    "description": "Some utitlities for office file types.",
+    "authors": [
+        {
+            "name": "jaberu",
+            "email": "alexander.herr.81@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jaberu/PHPWord.git"
+        }
+    ],    
+    "require": {
+        "smalot/pdfparser": "*",
+        "phpoffice/phpword": "0.12.2",
+        "phpoffice/phpexcel": "1.8",
+        "apache/log4php": "2.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.6"
+    },
+    "autoload": {
+        "psr-4": {"PhpOfficeUtils\\": "src/"}
+    }
+}
