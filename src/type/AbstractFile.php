@@ -37,7 +37,7 @@ abstract class AbstractFile implements IFile {
         $count = preg_match_all('/\pL+/u', $text, $matches);
         $logger = Logger::getLogger("file");
         sort($matches[0]);
-        $logger->debug($matches);
+        $logger->trace($matches);
         return $count;
     }
     
