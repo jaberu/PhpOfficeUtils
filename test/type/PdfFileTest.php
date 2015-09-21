@@ -6,6 +6,9 @@
  * and open the template in the editor.
  */
 namespace PhpOfficeUtils\type;
+
+use PhpOfficeUtils\ParseException;
+
 /**
  * Description of PDFFileTest
  *
@@ -28,5 +31,13 @@ class PdfFileTest extends \PHPUnit_Framework_TestCase {
         $cnt = $this->testFile->getWordCount();
         
         $this->assertEquals(36, $cnt);
+    }
+    
+    /**
+     * @expectedException PhpOfficeUtils\ParseException
+     */
+    public function testGetWordCount_Error() {
+        $broken = new PdfFile(__DIR__ . '/../resources/broken.pdf');
+        $broken->getWordCount();
     }
 }

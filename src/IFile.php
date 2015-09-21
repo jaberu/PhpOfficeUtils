@@ -15,6 +15,9 @@ namespace PhpOfficeUtils;
  */
 interface IFile {
     
+    /**
+     * @throws ParseException wrapping errors from the underlaying parser
+     */
     function getContentAsText();
     
     /**
@@ -23,6 +26,8 @@ interface IFile {
      * Numbers are ignored. Strings concatinated with a dot are splitted.
      * 
      * @return integer number of words
+     * 
+     * @throws ParseException wrapping errors from the underlaying parser
      */
     function getWordCount();
     

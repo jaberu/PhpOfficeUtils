@@ -8,6 +8,8 @@
 
 namespace PhpOfficeUtils\type;
 
+use PhpOfficeUtils\ParseException;
+
 /**
  * Description of PDFFile
  *
@@ -17,18 +19,29 @@ class PdfFile extends AbstractFile {
     
     /**
      *
-     * @var PDF2Text 
+     * @var Smalot\PdfParser\Document 
      */
-    private $file;
+    private $document;
     
     public function __construct($filename) {
         parent::__construct($filename);
-        $parser     = new \Smalot\PdfParser\Parser();
-        $this->file = $parser->parseFile($filename);
+
     }
     
     public function getContentAsText() {
-        $text = $this->file->getText();
+        $text = $this->getDocument()->getText();
         return $text;        
+    }
+    
+    private function getDocument() {
+        if (empty($this->document)) {
+            $parser     = new \Smalot\PdfParser\Parser();
+            try {
+                $this->document = $parser->parseFile($this->filename);
+            } catch (\Exception $ex) {
+                throw new ParseException($ex);
+            }
+        }
+        return $this->document;
     }
 }
