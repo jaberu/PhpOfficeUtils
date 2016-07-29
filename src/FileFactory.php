@@ -27,7 +27,7 @@ class FileFactory {
     }
     
     public function getFile($filename) {
-        $parts = split("\.", $filename);
+        $parts = explode("\.", $filename);
         $ext = $parts[sizeof($parts)-1];
         $handler = $this->defaultHandler;
         if (isset($this->handlers[$ext])) {
