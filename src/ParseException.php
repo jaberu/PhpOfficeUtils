@@ -14,7 +14,7 @@ namespace PhpOfficeUtils;
 class ParseException extends \Exception {
     
     public function __construct(\Exception $cause) {
-        parent::__construct("", -1, $cause);
+        parent::__construct($cause->getMessage(), -1, $cause);
     }
     
 }
