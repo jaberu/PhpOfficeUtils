@@ -29,7 +29,11 @@ class PdfFile extends AbstractFile {
     }
     
     public function getContentAsText() {
-        $text = $this->getDocument()->getText();
+        try {
+            $text = $this->getDocument()->getText();
+        } catch (\Exception $ex) {
+            throw new ParseException($ex);
+        }        
         return $text;        
     }
     
