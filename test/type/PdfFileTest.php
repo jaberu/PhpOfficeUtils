@@ -47,5 +47,5 @@ class PdfFileTest extends \PHPUnit_Framework_TestCase {
     public function testGetWordCount_MissingCatalog() {
         $broken = new PdfFile(__DIR__ . '/../resources/missing-catalog.pdf');
         $broken->getWordCount();
-    }    
+    }
 }
