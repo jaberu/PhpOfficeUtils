@@ -13,8 +13,10 @@ namespace PhpOfficeUtils\type;
  */
 abstract class AbstractExcelFile extends AbstractFile {
     
+    private $phpExcel;
+    
     public function getContentAsText() {
-        $phpExcel = $this->createReader();
+        $phpExcel = $this->getPhpExcel();
         $result = "";
         $sheetCount = $phpExcel->getSheetCount();
         for ($i = 0; $i < $sheetCount; $i++) {
@@ -27,6 +29,17 @@ abstract class AbstractExcelFile extends AbstractFile {
             }
         }
         return $result;
+    }
+    
+    /**
+     * 
+     * @return PHPExcel
+     */
+    function getPhpExcel() {
+        if ($this->phpExcel === null) {
+            $this->phpExcel = $this->createReader();
+        }
+        return $this->phpExcel;
     }
     
     protected abstract function createReader();

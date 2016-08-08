@@ -34,6 +34,10 @@ abstract class AbstractFile implements IFile {
      */
     function getWordCount() {
         $text = $this->getContentAsText();
+        return $this->countWords($text);
+    }
+    
+    function countWords($text) {
         $count = preg_match_all('/\pL+/u', $text, $matches);
         $logger = Logger::getLogger("file");
         sort($matches[0]);

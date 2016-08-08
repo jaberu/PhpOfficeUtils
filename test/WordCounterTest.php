@@ -31,5 +31,4 @@ class WordCounterTest extends \PHPUnit_Framework_TestCase {
         ));
         $this->assertEquals(167 * 2, $result);
     }    
-    
 }
