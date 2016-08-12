@@ -49,7 +49,12 @@ class PdfFileTest extends \PHPUnit_Framework_TestCase {
         $broken->getWordCount();
     }
 
-        
+    /**
+     * Test a secured pdf file.
+     * 
+     * TODO: currently fails
+     * TODO: check http://stackoverflow.com/questions/2950246/is-it-possible-to-remove-a-password-from-a-pdf-file-using-php
+     */
     public function testGetWordCount_SecuredPdf() {
         $secured = new PdfFile(__DIR__ . '/../resources/secured.pdf');
         $secured->getWordCount();
