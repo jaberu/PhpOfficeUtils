@@ -20,7 +20,7 @@ set_error_handler(function ($severity, $message, $filename, $lineno) {
     return;
   }
   if (error_reporting() & $severity) {
-    throw new Exception($message);
+    throw new \Exception($message);
   }
 });
 /**
