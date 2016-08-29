@@ -11,10 +11,8 @@
  *
  * @author jaberu
  */
-
 // Include 'Composer' autoloader.
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 $loader->add('PhpOfficeUtils\\', __DIR__ . "/../src/");
-
 ?>
