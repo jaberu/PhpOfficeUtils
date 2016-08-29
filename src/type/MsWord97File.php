@@ -15,14 +15,7 @@ use PhpOffice\PhpWord\IOFactory;
  * "uninitialized string offset" notice what we need to know to 
  * handle.
  */
-set_error_handler(function ($severity, $message, $filename, $lineno) {
-  if (error_reporting() == 0) {
-    return;
-  }
-  if (error_reporting() & $severity) {
-    throw new \Exception($message);
-  }
-});
+
 /**
  * Description of WordFile
  *
@@ -33,7 +26,7 @@ class MsWord97File extends AbstractMsWordFile {
     protected function createReader() {
         try {
             return IOFactory::load($this->filename, "MsDoc");
-        } catch (ErrorException $error) {
+        } catch (Exception $error) {
             // check set_error_handler on top
             throw new ParseException($error);
         }

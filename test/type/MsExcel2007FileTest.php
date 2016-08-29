@@ -26,6 +26,6 @@ class MsExcel2007FileTest extends \PHPUnit_Framework_TestCase {
     
     public function testGetWordCount() {
         $cnt = $this->testFile->getWordCount();
-        $this->assertEquals(167, $cnt);
+        $this->assertEquals(170, $cnt);
     }
 }

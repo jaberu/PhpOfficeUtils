@@ -16,19 +16,41 @@ abstract class AbstractExcelFile extends AbstractFile {
     private $phpExcel;
     
     public function getContentAsText() {
+        $callback = new ContentAsTextCallback;
+        $this->parseCells($callback);
+        return $callback->result;
+    }
+    
+    public function getWordCount() {
+        $callback = new WordCountCallback;
+        $this->parseCells($callback);
+        return $callback->count;
+    }
+    
+    private function parseCells(iCallback $callback) {
         $phpExcel = $this->getPhpExcel();
-        $result = "";
         $sheetCount = $phpExcel->getSheetCount();
         for ($i = 0; $i < $sheetCount; $i++) {
             $sheet = $phpExcel->getSheet($i);
             foreach ($sheet->getCellCollection() as $coord) {
                 $cell = $sheet->getCell($coord);
-                if ($cell->getDataType() == "s") {
-                    $result .= $cell->getValue() . " ";
-                }
+                $this->parseCell($cell, $callback);
+            }
+        }        
+    }
+    
+    private function parseCell($cell, $callback) {
+        switch ($cell->getDataType()) {
+            case \PHPExcel_Cell_DataType::TYPE_STRING :
+            case \PHPExcel_Cell_DataType::TYPE_STRING2 : {
+                $callback->text($cell->getValue());
+                break;
+            }
+            case \PHPExcel_Cell_DataType::TYPE_FORMULA : {
+                $callback->text($cell->getCalculatedValue());
+                break;
             }
         }
-        return $result;
     }
     
     /**

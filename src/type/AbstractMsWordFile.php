@@ -22,41 +22,51 @@ use PhpOffice\PhpWord\Element\Title;
 abstract class AbstractMsWordFile extends AbstractFile {
 
     public function getContentAsText() {
-        $result = "";
+        $callback = new ContentAsTextCallback;
         $sections = $this->createReader()->getSections();
         foreach ($sections as $section) {
-            $result = $this->parseContainer($section) . " ";
+            $this->parseContainer($section, $callback);
         }
-        return $result;
+        return $callback->result;
+    }
+    
+    public function getWordCount() {
+        $callback = new WordCountCallback;
+        $sections = $this->createReader()->getSections();
+        foreach ($sections as $section) {
+            $this->parseContainer($section, $callback);
+        }
+        return $callback->count;
     }
 
-    private function parseTable(Table $table) {
-        $result = "";
+    private function parseTable(Table $table, iCallback $callback) {
         foreach ($table->getRows() as $row) {
             foreach ($row->getCells() as $cell) {
-                $result .= $this->parseContainer($cell) . " ";
+                $this->parseContainer($cell, $callback);
             }
         }
-        return $result;
     }
 
-    private function parseContainer($container) {
-        $result = "";
+    private function parseContainer($container, iCallback $callback) {
         foreach ($container->getElements() as $element) {
             if ($element instanceof Text) {
-                $result .= $element->getText() . " ";
+                $callback->text($element->getText());
             } else if ($element instanceof Title) {
-                $result .= $element->getText() . " ";                
+                $callback->text($element->getText());
             } else if ($element instanceof Table) {
-                $result .= $this->parseTable($element) . " ";
+                $this->parseTable($element, $callback);
             } else if ($element instanceof ListItem) {
-                $result .= $element->getTextObject()->getText() . " ";
+                $callback->text($element->getTextObject()->getText());
             } else if ($element instanceof TextRun) {
-                $result .= $this->parseContainer($element) . " ";
+                $callback->text($this->parseContainer($element, $callback));
             }
         }
-        return $result;
     }
 
     protected abstract function createReader();
 }
+
+
+
+
+

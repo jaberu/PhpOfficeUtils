@@ -19,7 +19,7 @@ class PdfFileTest extends \PHPUnit_Framework_TestCase {
     private $testFile;
     
     public function setUp() {
-        $this->testFile = new PdfFile(__DIR__ . '/../resources/example.pdf');
+        $this->testFile = new PdfFile(__DIR__ . '/../resources/Angebot_23.08.2016.pdf');
     }
     
     public function testGetContentAsText() {
